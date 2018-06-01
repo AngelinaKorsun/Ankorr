@@ -47,7 +47,7 @@ string Node::setOperator(long long num)
 class SkipList
 {
     const int MAXLVL;
-    float P;
+    float Part;
     int level;
     Node *header;
 public:
@@ -106,29 +106,29 @@ void readDictionary()
         cout << buff << endl;
 }
 
-SkipList::SkipList(int MAXLV, float P) :MAXLVL(MAXLV)
+SkipList::SkipList(int MAXLV, float Part) :MAXLVL(MAXLV)
 {
-    this->P = P;
+    this->Part = Part;
     level = 0;
     header = new Node("a", -1, MAXLVL);
 };
 
 int SkipList::randomLevel()
 {
-    float r = (float)rand() / RAND_MAX;
+    float random = (float)rand() / RAND_MAX;
     int lvl = 0;
-    while (r < P && lvl < MAXLVL)
+    while (random < Part && lvl < MAXLVL)
     {
         lvl++;
-        r = (float)rand() / RAND_MAX;
+        random = (float)rand() / RAND_MAX;
     }
     return lvl;
 };
 
 Node* SkipList::createNode(char* key, long long number, int level)
 {
-    Node *n = new Node(key, number, level);
-    return n;
+    Node *node = new Node(key, number, level);
+    return node;
 };
 
 long long SkipList::search(char* key)
@@ -154,7 +154,7 @@ void SkipList::freeList(char* key)
 {
     Node *current = header;
     int na = 0;
-    Node * n = header;
+    Node * node = header;
     Node **update = new Node*[MAXLVL + 1];
     memset(update, 0, sizeof(Node*)*(MAXLVL + 1));
     for (int i = level; i >= 0; i--)
@@ -163,7 +163,7 @@ void SkipList::freeList(char* key)
         {
             if (strcmp(current->next[i]->key, key) <= 0)
             {
-                n = current;
+                node = current;
                 current = current->next[i];
                 na = i;
                 
@@ -175,12 +175,12 @@ void SkipList::freeList(char* key)
     
     for (int i = na; i >= 0; i--)
     {
-        while (n->next[i] != NULL && strcmp(n->next[i]->key, key) != 0)
+        while (node->next[i] != NULL && strcmp(node->next[i]->key, key) != 0)
         {
-            n = n->next[i];
+            node = node->next[i];
         }
         update[i] = current->next[i];
-        n->next[i] = update[i];
+        node->next[i] = update[i];
     }
     delete current;
 };
@@ -209,12 +209,12 @@ void SkipList::insertElement(char* key, long long number)
         }
         
         
-        Node* n = createNode(key, number, rlevel);
+        Node* node = createNode(key, number, rlevel);
         
         for (int i = 0;i <= rlevel;i++)
         {
-            n->next[i] = update[i]->next[i];
-            update[i]->next[i] = n;
+            node->next[i] = update[i]->next[i];
+            update[i]->next[i] = node;
         }
         cout << "Successfully Inserted key " << key << "\n";
     }
