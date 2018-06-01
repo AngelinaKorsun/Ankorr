@@ -296,7 +296,7 @@ void createSession(SkipList &list)
 
 int main()
 {
-    //setlocale(0, "rus");
+    setlocale(0, "rus");
     srand((unsigned)time(0));
     SkipList lst(4, 0.5);
     char *a;
@@ -324,7 +324,7 @@ int main()
     }
     //system("clear");
     char b;
-    while (b != 'e')
+    while (1)
     {
         cout << "f-Find the number\n"
         << "d-Delete the contact\n"
