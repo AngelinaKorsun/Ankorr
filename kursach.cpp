@@ -106,9 +106,9 @@ void readDictionary()
         cout << buff << endl;
 }
 
-SkipList::SkipList(int MAXLV, float Part) :MAXLVL(MAXLV)
+SkipList::SkipList(int MAXLV, float Prob) :MAXLVL(MAXLV)
 {
-    this->Part = Part;
+    this->Prob = Prob; //prob is the skip list's probability value 
     level = 0;
     header = new Node("a", -1, MAXLVL);
 };
@@ -117,7 +117,7 @@ int SkipList::randomLevel()
 {
     float random = (float)rand() / RAND_MAX;
     int lvl = 0;
-    while (random < Part && lvl < MAXLVL)
+    while (random < Prob && lvl < MAXLVL)
     {
         lvl++;
         random = (float)rand() / RAND_MAX;
