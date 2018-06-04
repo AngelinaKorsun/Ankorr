@@ -33,15 +33,31 @@ Node::Node(char *key, long long number, int level)
     
 };
 
+struct Operator
+{
+    string oper;
+    vector<int> keys;
+};
+
+string getOperator(int n)
+{
+    Operator operators[3];
+    operators[0].oper = "Vodaphone";
+    operators[0].keys = { 50, 95, 66, 99 };
+    operators[1].oper = "Lifecell";
+    operators[1].keys = { 63, 73, 93 };
+    operators[2].oper = "Kyivstar";
+    operators[2].keys = { 67, 68, 96, 97, 98 };
+    for (int i = 0; i < 3; i++)
+        for (unsigned int j = 0; j < operators[i].keys.size(); j++)
+            if (n == operators[i].keys[j]) return operators[i].oper;
+    return "Undefined";
+}
+
 string Node::setOperator(long long num)
 {
     long long n = (num / 10000000) - 38000;
-    string oper;
-    if (n == 50 || n == 95 || n == 66 || n == 99) oper = "Vodaphone";
-    else if (n == 63 || n == 93 || n == 73) oper = "Lifecell";
-    else if (n == 67 || n == 68 || n == 96 || n == 97 || n == 98) oper = "Kyivstar";
-    else oper = "Undefined";
-    return oper;
+    return getOperator(n);
 };
 
 class SkipList
@@ -70,6 +86,7 @@ bool checkFile(string file_name)
     file.open(file_name);
     if (!file) flag = true;
     return flag;
+    //(file) ? return false : return true;
 }
 
 void SkipList::createDictionary()
