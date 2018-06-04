@@ -81,12 +81,8 @@ public:
 
 bool checkFile(string file_name)
 {
-    bool flag = false;
-    ifstream file;
-    file.open(file_name);
-    if (!file) flag = true;
-    return flag;
-    //(file) ? return false : return true;
+    ifstream file(file_name);
+    return !file ? true : false;
 }
 
 void SkipList::createDictionary()
