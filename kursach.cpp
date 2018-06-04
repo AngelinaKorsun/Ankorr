@@ -9,6 +9,9 @@
 using namespace std;
 //////////////////////////////////////////////////////////////////////////
 
+extern const int divide = 10000000;
+extern const int code = 38000;
+
 class Node
 {
 public:
@@ -56,7 +59,7 @@ string getOperator(int n)
 
 string Node::setOperator(long long num)
 {
-    long long n = (num / 10000000) - 38000;
+    long long n = (num / divide) - code;
     return getOperator(n);
 };
 
@@ -79,11 +82,6 @@ public:
     void EditElement(char* key, long long number);
 };
 
-bool checkFile(string file_name)
-{
-    ifstream file(file_name);
-    return !file ? true : false;
-}
 
 void SkipList::createDictionary()
 {
@@ -98,16 +96,16 @@ void SkipList::createDictionary()
     file.close();
 }
 
+
 bool fileIsEmpty()
 {
     ifstream file("dictionary.txt", ios_base::in);
-    bool flag = file.is_open();
-    if (flag)
+    if (file.is_open())
     {
         file.seekg(0, ios_base::end);
-        flag = file.tellg() > 0;
+        return file.tellg() > 0;
     }
-    return flag;
+    else return false;
 }
 
 void readDictionary()
